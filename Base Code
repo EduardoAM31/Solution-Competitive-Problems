@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+ 
+#define int long long
+#define f first
+#define s second
+#define pb push_back
+#define bg begin()
+#define en end()
+#define sz(x) (int)(x.size())
+#define all(x) (x).bg,(x).en
+ 
+const int mod = (int)1e9+7;
+#define inf LLONG_MAX
+ 
+#define vi vector<int>
+#define vvi vector<vi>
+#define vvvi vector<vvi>
+#define pii pair<int,int>
+#define vpi vector<pii>
+
+signed main(){
+  ios;
+}
