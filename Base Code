@@ -11,6 +11,8 @@ using namespace std;
 #define en end()
 #define sz(x) (int)(x.size())
 #define all(x) (x).bg,(x).en
+#define lb lower_bound
+#define up upper_bound 
  
 const int mod = (int)1e9+7;
 #define inf LLONG_MAX
