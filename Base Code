@@ -11,8 +11,11 @@ using namespace std;
 #define en end()
 #define sz(x) (int)(x.size())
 #define all(x) (x).bg,(x).en
+#define alld(x) (x).bg,(x).en,greater<>()
 #define lb lower_bound
 #define up upper_bound 
+#define sorc(x) sort(all(x))
+#define sord(x) sort(alld(x))
  
 const int mod = (int)1e9+7;
 #define inf LLONG_MAX
@@ -24,5 +27,5 @@ const int mod = (int)1e9+7;
 #define vpi vector<pii>
 
 signed main(){
-  ios;
+	ios;
 }
