@@ -11,7 +11,7 @@ using namespace std;
 #define en end()
 #define sz(x) (int)(x.size())
 #define all(x) (x).bg,(x).en
-#define alld(x) (x).bg,(x).en,greater<>()
+#define alld(x) (x).rbg,(x).ren
 #define lb lower_bound
 #define up upper_bound 
 #define sorc(x) sort(all(x))
@@ -25,7 +25,8 @@ const int mod = (int)1e9+7;
 #define vvvi vector<vvi>
 #define pii pair<int,int>
 #define vpi vector<pii>
-
+//broken
+int fmod(const int input, const int ceil){return input < ceil ? input : input % ceil;}
 signed main(){
 	ios;
 }
