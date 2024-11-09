@@ -26,7 +26,7 @@ const int mod = (int)1e9+7;
 #define vvvi vector<vvi>
 #define pii pair<int,int>
 #define vpi vector<pii>
-//broken input = i, ceil = j -> fmod(i+1, j-i) == i%j
+//broken input = i, ceil = j -> fmod(i, j-i) == i%j
 int fmod(const int input, const int ceil){
 	return input < ceil ? input : input % ceil;
 }
