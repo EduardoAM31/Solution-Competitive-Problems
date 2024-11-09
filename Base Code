@@ -27,7 +27,19 @@ const int mod = (int)1e9+7;
 #define pii pair<int,int>
 #define vpi vector<pii>
 //broken input = i, ceil = j -> fmod(i+1, j-i) == i%j
-int fmod(const int input, const int ceil){return input < ceil ? input : input % ceil;}
+int fmod(const int input, const int ceil){
+	return input < ceil ? input : input % ceil;
+}
+int add(int a,int b){
+    a+=b;
+    if(a>=mod)a-=mod;
+    return a;
+}
+int sub(int a,int b){
+    a-=b;
+    if(a<0)a+=mod;
+    return a;
+}
 template<class v>
 auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
     os << vec[0];
