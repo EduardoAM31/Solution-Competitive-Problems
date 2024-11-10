@@ -9,6 +9,8 @@ using namespace std;
 #define pb push_back
 #define bg begin()
 #define en end()
+#define rbg rbegin()
+#define ren rend()
 #define sz(x) (int)(x.size())
 #define all(x) (x).bg,(x).en
 #define alld(x) (x).rbg,(x).ren
@@ -17,7 +19,7 @@ using namespace std;
 #define sorc(x) sort(all(x))
 #define sord(x) sort(alld(x))
  
-const int mod = (int)1e9+7;
+int mod = (int)1e9+7;
 #define inf LLONG_MAX
 #define endl '\n'
 
@@ -26,19 +28,10 @@ const int mod = (int)1e9+7;
 #define vvvi vector<vvi>
 #define pii pair<int,int>
 #define vpi vector<pii>
-//broken input = i, ceil = j -> fmod(i, j-i) == i%j
-int fmod(const int input, const int ceil){
-	return input < ceil ? input : input % ceil;
-}
-int add(int a,int b){
-    a+=b;
-    if(a>=mod)a-=mod;
-    return a;
-}
-int sub(int a,int b){
-    a-=b;
-    if(a<0)a+=mod;
-    return a;
+//broken input = i, ceil = j -> fmod(i, j) == i%j
+//auto func = [&]() -> vi{};
+int fmod(const int i, const int j){
+	return i < j ? i : i % j;
 }
 template<class v>
 auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
@@ -54,7 +47,6 @@ auto operator>>(istream &is, vector<v> &vec)->istream& {
         is >> i;    
     return is;
 }
- 
 template<class v>
 auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
     for (auto &i : vec) {
