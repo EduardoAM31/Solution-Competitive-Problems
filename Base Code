@@ -18,6 +18,7 @@ using namespace std;
 #define up upper_bound 
 #define sorc(x) sort(all(x))
 #define sord(x) sort(alld(x))
+#define rever(x) string(alld(x))
  
 int mod = (int)1e9+7;
 #define inf LLONG_MAX
@@ -28,31 +29,25 @@ int mod = (int)1e9+7;
 #define vvvi vector<vvi>
 #define pii pair<int,int>
 #define vpi vector<pii>
-//broken input = i, ceil = j -> fmod(i, j) == i%j
-//auto func = [&]() -> vi{};
-int fmod(const int i, const int j){
-	return i < j ? i : i % j;
-}
+#define vvpi vector<vpi>
+int fmod(const int i, const int j){return i < j ? i : i % j;}
 template<class v>
 auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
     os << vec[0];
-    for (size_t i = 1; i < vec.size(); i++) 
-        os << ' ' << vec[i];    
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
     os << '\n';
     return os;
 }
 template<class v>
 auto operator>>(istream &is, vector<v> &vec)->istream& {
-    for (auto &i : vec) 
-        is >> i;    
+    for (auto &i : vec) is >> i;    
     return is;
 }
 template<class v>
 auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
     for (auto &i : vec) {
         os << i[0];
-        for (size_t j = 1; j < i.size(); j++) 
-            os << ' ' << i[j];        
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
         os << '\n';
     }
     return os;
@@ -60,10 +55,15 @@ auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
 template<class v>
 auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
     for (auto &i : vec) 
-        for (auto &j : i) 
-            is >> j;            
+        for (auto &j : i) is >> j;            
     return is;
 }
 signed main(){
-	ios;
-}
+    ios;
+    
+}   
+
+
+
+ 
+
