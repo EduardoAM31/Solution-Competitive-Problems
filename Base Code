@@ -7,30 +7,14 @@ using namespace std;
 #define f first
 #define s second
 #define pb push_back
-#define bg begin()
-#define en end()
-#define rbg rbegin()
-#define ren rend()
 #define sz(x) (int)(x.size())
 #define all(x) (x).bg,(x).en
-#define alld(x) (x).rbg,(x).ren
-#define lb lower_bound
-#define up upper_bound 
-#define sorc(x) sort(all(x))
-#define sord(x) sort(alld(x))
-#define rever(x) string(alld(x))
- 
-int mod = (int)1e9+7;
-#define inf LLONG_MAX
 #define endl '\n'
+#define V vector
+ 
+const int mod = (int)1e9+7;
+const int inf = (int)1e18L+5;
 
-#define vi vector<int>
-#define vvi vector<vi>
-#define vvvi vector<vvi>
-#define pii pair<int,int>
-#define vpi vector<pii>
-#define vvpi vector<vpi>
-int fmod(const int i, const int j){return i < j ? i : i % j;}
 template<class v>
 auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
     os << vec[0];
@@ -45,7 +29,7 @@ auto operator>>(istream &is, vector<v> &vec)->istream& {
 }
 template<class v>
 auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
-    for (auto &i : vec) {
+    for (auto &i : vec){
         os << i[0];
         for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
         os << '\n';
@@ -58,12 +42,14 @@ auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
         for (auto &j : i) is >> j;            
     return is;
 }
-signed main(){
+void solve(){
+
+}
+signed main() {
     ios;
-    
-}   
-
-
-
- 
-
+    int tt=1;
+    //cin>>tt;
+    while(tt--){
+        solve();
+    }
+}
