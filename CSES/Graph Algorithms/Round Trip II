@@ -1,0 +1,110 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+//made by dudugyn :DD
+#define int long long
+#define double long double
+#define f first
+#define s second
+#define pb push_back
+#define sz(x) (int)(x.size())
+#define all(x) (x).begin(),(x).end()
+#define allr(x) (x).rbegin(),(x).rend()
+#define endl '\n'
+#define V vector
+#define pii pair<int,int>
+#define mem(x, v) memset((x), v, sizeof (x))
+#define mid (l+r)/2
+const int mod = (int)1e9+7;
+const int inf = (int)LLONG_MAX;
+ 
+template<class v>
+auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
+    os << vec[0];
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
+    os << '\n';
+    return os;
+}
+template<class v>
+auto operator>>(istream &is, vector<v> &vec)->istream& {
+    for (auto &i : vec) is >> i;    
+    return is;
+}
+template<class v>
+auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
+    for (auto &i : vec) {
+        os << i[0];
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
+        os << '\n';
+    }
+    return os;
+}
+template<class v>
+auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
+    for (auto &i : vec) 
+        for (auto &j : i) is >> j;            
+    return is;
+}
+/*
+ * LE O PROBLEMA ATE O FINAL
+ * LE OS SAMPLES, ENTENDE OS SAMPLES
+ * LE INPUT, LE OUTPUT
+ * LE OS CONSTRAINTS
+ * By : Matheus_H_Campos
+ */
+void solve(){
+    int n, m;
+    cin >> n >> m;
+    V<V<int>> adj(n+1);
+    for(int i=0;i<m;i++){
+        int x, y;
+        cin >> x >> y;
+        adj[x].emplace_back(y);
+    }
+    int end = 0, start = -1;
+    V<int> stats(n+1, 0), parent(n+1, -1);
+    function<bool(int)> dfs = [&](int u){
+        stats[u] = 1;
+        for(auto& v : adj[u]){
+            if(stats[v] == 0){
+                parent[v] = u;
+                if(dfs(v))  
+                    return true;
+            }
+            if(stats[v] == 1){
+                start = v;
+                end = u;
+                return true;
+            }
+        }
+        stats[u] = 2;
+        return false;
+    };
+    for(int i=1;i<=n;i++)
+        if(stats[i] == 0 && dfs(i))
+            break;
+    if(start == -1){
+        cout<<"IMPOSSIBLE\n";
+        return;
+    }
+    V<int> res;
+    res.emplace_back(start);
+    while(start != end){
+        res.emplace_back(end);
+        end = parent[end];
+    }
+    res.emplace_back(start);
+    reverse(all(res));
+    cout << sz(res) << endl;
+    cout << res;
+}
+signed main() {
+    ios;
+    int tt=1;
+    //cin>>tt;
+    while(tt--){
+        solve();
+    }
+    return 0;
+}

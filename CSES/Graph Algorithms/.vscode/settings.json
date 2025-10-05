@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "monsters": "cpp",
+        "iostream": "cpp",
+        "game routes": "cpp",
+        "road reparation": "cpp",
+        "road construction": "cpp",
+        "flight routes check": "cpp",
+        "download speed": "cpp",
+        "police chase": "cpp"
+    }
+}

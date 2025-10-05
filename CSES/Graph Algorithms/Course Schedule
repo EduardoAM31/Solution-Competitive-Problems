@@ -1,0 +1,52 @@
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define pb push_back
+#define V vector
+void solve(){
+    int n,m;
+    cin>>n>>m;
+    V<int> g(n);
+    V<V<int>> adj(n);
+    V<int> res;
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        --u,--v;
+        g[v]++;
+        adj[u].pb(v);
+    }
+    queue<int> q;
+    for(int i=0;i<n;i++)
+        if(!g[i]){
+        q.push(i);
+        res.pb(i+1);
+        }
+    while(!q.empty()){
+        int u = q.front();
+        q.pop();
+        for(auto& v : adj[u]){
+        g[v]--;
+        if(!g[v]){
+            q.push(v); 
+            res.pb(v+1);
+        }
+        }
+    }
+    if(*max_element(g.begin(), g.end()) != 0){
+        cout<<"IMPOSSIBLE\n";
+        return;
+    }
+    for(auto& i : res)
+        cout<<i<<" ";
+    cout<<endl;
+}
+signed main(){
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+    int tt=1;
+    // cin>>tt;
+    while(tt--){
+    solve();
+    }
+}

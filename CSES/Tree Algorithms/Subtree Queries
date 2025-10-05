@@ -1,0 +1,144 @@
+
+#if defined(LOCAL) or not defined(LUOGU)
+#pragma GCC optimize(3)
+#pragma GCC optimize("Ofast,unroll-loops")
+#endif
+#include <bits/stdc++.h>
+/*#include <ext/pb_ds/assoc_container.hpp> // Common file
+#include <ext/pb_ds/tree_policy.hpp>
+#include <functional> // for less
+using namespace __gnu_pbds;
+using namespace std;
+ 
+// a new data structure defined. Please refer below
+// GNU link : https://goo.gl/WVDL6g
+typedef tree<pair<int, int>, null_type,
+             less<pair<int, int> >, rb_tree_tag,
+             tree_order_statistics_node_update>
+    ordered_multiset;*/
+using namespace std;
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+ 
+#define int long long
+#define f first
+#define s second
+#define pb push_back
+#define bg begin()
+#define en end()
+#define sz(x) (int)(x.size())
+#define all(x) (x).bg,(x).en
+#define alld(x) (x).rbegin,(x).rend
+#define lb lower_bound
+#define up upper_bound 
+#define sorc(x) sort(all(x))
+#define sord(x) sort(alld(x))
+ 
+const int mod = (int)1e9+7;
+#define inf LLONG_MAX
+ 
+#define V vector
+int fmod(const int i, const int j){return i < j ? i : i % j;}
+template<class v>
+auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
+    os << vec[0];
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
+    os << '\n';
+    return os;
+}
+template<class v>
+auto operator>>(istream &is, vector<v> &vec)->istream& {
+    for (auto &i : vec) is >> i;    
+    return is;
+}
+template<class v>
+auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
+    for (auto &i : vec) {
+        os << i[0];
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
+        os << '\n';
+    }
+    return os;
+}
+template<class v>
+auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
+    for (auto &i : vec) 
+        for (auto &j : i) is >> j;            
+    return is;
+}
+struct BIT{
+    int n;
+    V<int> bit, arr;
+    
+    BIT(int size) : n(size),  bit(n+1), arr(n) {}
+ 
+    void set(int ind, int val) { update(ind, val - arr[ind]);}
+ 
+    void update(int ind, int val) {
+        arr[ind] += val;
+        ind++;
+        for(;ind <= n;ind += ind & -ind)bit[ind] += val;
+    }
+ 
+    int query(int ind) {
+        int sum=0;
+        ind++;
+        for(;ind > 0; ind -= ind & -ind)sum += bit[ind];
+        return sum;
+    }
+};
+V<int> start;
+V<int> End;
+int timer=0;
+void dfs(int u, int p, V<V<int>>& adj){
+    start[u] = timer++;
+    for(auto&v : adj[u]){
+        if(v == p)continue;
+        dfs(v, u, adj);
+    }
+    End[u] = timer;
+}
+void solve(){
+    int n,qq;
+    cin>>n>>qq;
+    V<V<int>> adj(n);
+    V<int> values(n);
+    cin>>values;
+    End = V<int>(n);
+    start = V<int>(n);
+    for(int i=0;i<n-1;i++){
+        int u,v;
+        cin>>u>>v;
+        --u, --v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    dfs(0, -1, adj);
+    BIT bit(n);
+    for(int i=0;i<n;i++){
+        bit.set(start[i], values[i]);
+    }
+    while(qq--){
+        int t;
+        cin>>t;
+        if(t == 1){
+            int u, x;
+            cin>>u>>x;
+            --u;
+            bit.set(start[u], x);
+        }else{
+            int u;
+            cin>>u;
+            --u;
+            cout<<bit.query(End[u]-1) - (start[u] == 0 ? 0 : bit.query(start[u]-1))<<endl;
+        }
+    }
+}
+signed main() {
+    ios;
+    int tt=1;
+    //cin>>tt;
+    while(tt--){
+        solve();
+    }
+}

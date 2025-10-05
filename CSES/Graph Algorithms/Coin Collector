@@ -1,0 +1,139 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+//made by dudugyn :DD
+#define int long long
+#define double long double
+#define f first
+#define s second
+#define pb push_back
+#define sz(x) (int)(x.size())
+#define all(x) (x).begin(),(x).end()
+#define allr(x) (x).rbegin(),(x).rend()
+#define endl '\n'
+#define V vector
+#define pii pair<int,int>
+#define mem(x, v) memset((x), v, sizeof (x))
+#define mid (l+r)/2
+const int mod = (int)1e9+7;
+const int inf = (int)LLONG_MAX;
+ 
+template<class v>
+auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
+    if(vec.size())
+        os << vec[0];
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
+    os << '\n';
+    return os;
+}
+template<class v>
+auto operator>>(istream &is, vector<v> &vec)->istream& {
+    for (auto &i : vec) is >> i;    
+    return is;
+}
+template<class v>
+auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
+    for (auto &i : vec) {
+        os << i[0];
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
+        os << '\n';
+    }
+    return os;
+}
+template<class v>
+auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
+    for (auto &i : vec) 
+        for (auto &j : i) is >> j;            
+    return is;
+}
+/*
+ * LE O PROBLEMA ATE O FINAL
+ * LE OS SAMPLES, ENTENDE OS SAMPLES
+ * LE INPUT, LE OUTPUT
+ * LE OS CONSTRAINTS
+ * By : Matheus_H_Campos
+ */
+const int MAX = 1e5+1;
+int n;
+vector<int> g[MAX], gi[MAX], adj[MAX]; // grafo invertido
+int vis[MAX];
+stack<int> S;
+int comp[MAX]; // componente conexo de cada vertice
+void dfs(int k) {
+    vis[k] = 1;
+	for (int i = 0; i < (int) g[k].size(); i++)
+    if (!vis[g[k][i]]) dfs(g[k][i]);
+    
+	S.push(k);
+}
+ 
+void scc(int k, int c) {
+	vis[k] = 1;
+	comp[k] = c;
+	for (int i = 0; i < (int) gi[k].size(); i++)
+    if (!vis[gi[k][i]]) scc(gi[k][i], c);
+}
+ 
+void kosaraju() {
+    for (int i = 0; i < n; i++) vis[i] = 0;
+	for (int i = 0; i < n; i++) if (!vis[i]) dfs(i);
+    
+	for (int i = 0; i < n; i++) vis[i] = 0;
+	while (S.size()) {
+        int u = S.top();
+		S.pop();
+		if (!vis[u]) scc(u, u);
+	}
+}
+V<int> tot;
+void res(int u){
+    vis[u] = 1;
+    int ans = 0;
+    for(auto& v : adj[u]){
+        if(!vis[v]){
+            res(v);
+        }
+        ans = max(ans, tot[v]);
+    }
+    tot[u] += ans;
+}
+void solve(){
+    int m;
+    cin >> n >> m;
+    V<int> v(n);
+    tot = V<int>(n, 0);
+    cin >> v;
+    for(int i=0;i<m;i++){
+        int x, y;
+        cin >> x >> y;
+        --x, --y;
+        gi[y].emplace_back(x);
+        g[x].emplace_back(y);
+    }
+    kosaraju();
+    for(int u = 0;u < n;u++){
+        tot[comp[u]] += v[u];
+        for(auto& v : g[u]){
+            if(comp[u] != comp[v]){
+                adj[comp[u]].emplace_back(comp[v]);
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) vis[i] = 0;
+    int ans = 0;
+    for(int i = 0;i < n;i++){
+        if(!vis[i])
+            res(i);
+    }
+    cout << *max_element(all(tot)) << endl;
+}
+signed main() {
+    ios;
+    int tt=1;
+    //cin>>tt;
+    while(tt--){
+        solve();
+    }
+    return 0;
+}

@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+//made by dudugyn :DD
+#define int long long
+#define f first
+#define s second
+#define pb push_back
+#define sz(x) (int)(x.size())
+#define all(x) (x).begin(),(x).end()
+#define endl '\n'
+#define V vector
+ 
+const int mod = (int)1e9+7;
+const int llinf = (int)LLONG_MAX;
+const int inf = (int)INT_MAX;
+ 
+template<class v>
+auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
+    os << vec[0];
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
+    os << '\n';
+    return os;
+}
+template<class v>
+auto operator>>(istream &is, vector<v> &vec)->istream& {
+    for (auto &i : vec) is >> i;    
+    return is;
+}
+template<class v>
+auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
+    for (auto &i : vec){
+        os << i[0];
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
+        os << '\n';
+    }
+    return os;
+}
+template<class v>
+auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
+    for (auto &i : vec) 
+        for (auto &j : i) is >> j;            
+    return is;
+}
+void solve(){
+    int n;
+    cin>>n;
+    V<int> v(n);
+    cin>>v;
+    int sum=0;
+    sort(all(v));
+    for(auto& i : v)sum+=i;
+    V<V<int>> dp(n+1, V<int>(sum+1, 0));
+    dp[0][0] = 1;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<=sum;j++){
+            dp[i][j] = dp[i-1][j];
+            int sum = j - v[i-1];
+            if(sum >= 0 && dp[i-1][sum])dp[i][j] = 1;
+        }
+    }
+    int c = 0;
+    V<int> res;
+    for(int j=1;j<=sum;j++){
+        if(dp[n][j]){
+            c++;
+            res.pb(j);
+        }
+    }
+    cout<<c<<endl<<res;
+}
+signed main() {
+    ios;
+    int tt=1;
+    //cin>>tt;
+    while(tt--){
+        solve();
+    }
+}

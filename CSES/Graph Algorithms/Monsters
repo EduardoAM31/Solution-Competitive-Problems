@@ -1,0 +1,141 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+//made by dudugyn :DD
+#define int long long
+#define double long double
+#define f first
+#define s second
+#define sz(x) (int)(x.size())
+#define all(x) (x).begin(),(x).end()
+#define allr(x) (x).rbegin(),(x).rend()
+#define endl '\n'
+#define V vector
+#define pii pair<int,int>
+#define mem(x, v) memset((x), v, sizeof (x))
+#define mid (l+r)/2
+const int mod = (int)1e9+7;
+const int inf = (int)LLONG_MAX >> 1;
+ 
+template<class v>
+auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
+    if(vec.size())
+        os << vec[0];
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
+    os << '\n';
+    return os;
+}
+template<class v>
+auto operator>>(istream &is, vector<v> &vec)->istream& {
+    for (auto &i : vec) is >> i;    
+    return is;
+}
+template<class v>
+auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
+    for (auto &i : vec) {
+        os << i[0];
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
+        os << '\n';
+    }
+    return os;
+}
+template<class v>
+auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
+    for (auto &i : vec) 
+        for (auto &j : i) is >> j;            
+    return is;
+}
+/*
+ * LE O PROBLEMA ATE O FINAL
+ * LE OS SAMPLES, ENTENDE OS SAMPLES
+ * LE INPUT, LE OUTPUT
+ * LE OS CONSTRAINTS
+ * By : Matheus_H_Campos
+ */
+int vx[4] = {1,-1,0,0};
+int vy[4] = {0,0,1,-1};
+char dir[4] = {'D','U','R','L'};
+void solve(){
+    int n,m;
+    cin>>n>>m;
+    V<V<char>> mat(n, V<char>(m));
+    V<V<char>> res(n, V<char>(m, '.'));
+    V<V<int>> mo(n, V<int>(m, 1000001)), p(n, V<int>(m, 1000001));
+    queue<pii> qm, qp;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin>>mat[i][j];
+            if(mat[i][j] == 'M'){
+                qm.push({i, j});
+                mo[i][j] = 0;
+            }else if(mat[i][j] == 'A'){
+                qp.push({i, j});
+                p[i][j] = 0;
+                res[i][j] = 'x';
+                if(i == 0 || i == n-1 || j == 0 || j == m-1){
+                    cout<<"YES\n"<<0<<endl;;
+                    return;
+                }
+            }
+        }
+    }
+    while(!qm.empty()){
+        int i = qm.front().f;
+        int j = qm.front().s;
+        qm.pop();
+        for(int k=0;k<4;k++){
+            int ni = i + vx[k];
+            int nj = j + vy[k];
+            if(ni < 0 || ni >= n || nj < 0 || nj >= m || mat[ni][nj] == '#' || mo[ni][nj] <= mo[i][j] + 1)continue;
+            mo[ni][nj] = mo[i][j] + 1;
+            qm.push({ni,nj});
+        }
+    }
+    int fi=n,fj=m;
+    while(!qp.empty()){
+        int i = qp.front().f;
+        int j = qp.front().s;
+        qp.pop();
+        for(int k=0;k<4;k++){
+            int ni = i + vx[k];
+            int nj = j + vy[k];
+            if(ni < 0 || ni >= n || nj < 0 || nj >= m || mat[ni][nj] == '#' || p[ni][nj] <= p[i][j] + 1 || p[i][j] + 1 >= mo[ni][nj])continue;
+            p[ni][nj] = p[i][j] + 1;
+            res[ni][nj] = dir[k];
+            qp.push({ni,nj});
+            if(ni == n-1 || nj == m-1 || ni == 0 || nj == 0){
+                fi = ni, fj = nj;
+                while(!qp.empty()){
+                    qp.pop();
+                    break;
+                }
+            }
+        }
+    }
+    if(fi == n && fj == m){
+        cout<<"NO\n";
+        return;
+    }
+    string resp = "";
+    while(res[fi][fj] != 'x'){
+        resp.push_back(res[fi][fj]);
+        if(res[fi][fj] == 'R')fj--;
+        else if(res[fi][fj] == 'L')fj++;
+        else if(res[fi][fj] == 'U')fi++;
+        else if(res[fi][fj] == 'D')fi--;
+    }
+    reverse(all(resp));
+    cout<<"YES\n";
+    cout<<sz(resp)<<endl;
+    cout<<resp<<endl;
+    //cout<<mo<<endl<<p<<endl<<res;
+}
+signed main() {
+    ios;
+    int tt=1;
+    //cin>>tt;
+    while(tt--){
+        solve();
+    }
+}

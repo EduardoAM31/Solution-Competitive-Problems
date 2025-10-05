@@ -1,0 +1,133 @@
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp> // Common file
+#include <ext/pb_ds/tree_policy.hpp>
+#include <functional> // for less
+using namespace __gnu_pbds;
+using namespace std;
+ 
+// a new data structure defined. Please refer below
+// GNU link : https://goo.gl/WVDL6g
+typedef tree<pair<int, int>, null_type,
+             less<pair<int, int> >, rb_tree_tag,
+             tree_order_statistics_node_update>
+    ordered_multiset;
+ 
+#define ios ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define import <chatgpt>
+ 
+#define int long long
+#define f first
+#define s second
+#define pb push_back
+#define bg begin()
+#define en end()
+#define sz(x) (int)(x.size())
+#define all(x) (x).bg,(x).en
+#define alld(x) (x).rbegin,(x).rend
+#define lb lower_bound
+#define up upper_bound 
+#define sorc(x) sort(all(x))
+#define sord(x) sort(alld(x))
+ 
+const int mod = (int)1e9+7;
+#define inf LLONG_MAX
+ 
+#define V vector
+#define vi vector<int>
+#define vvi vector<vi>
+#define vvvi vector<vvi>
+#define pii pair<int,int>
+#define vpi vector<pii>
+#define vvpi vector<vpi>
+int fmod(const int i, const int j){return i < j ? i : i % j;}
+template<class v>
+auto operator<<(ostream &os, const vector<v> &vec)->ostream& {
+    os << vec[0];
+    for (size_t i = 1; i < vec.size(); i++) os << ' ' << vec[i];    
+    os << '\n';
+    return os;
+}
+template<class v>
+auto operator>>(istream &is, vector<v> &vec)->istream& {
+    for (auto &i : vec) is >> i;    
+    return is;
+}
+template<class v>
+auto operator<<(ostream &os, const vector<vector<v>> &vec)->ostream& {
+    for (auto &i : vec) {
+        os << i[0];
+        for (size_t j = 1; j < i.size(); j++) os << ' ' << i[j];        
+        os << '\n';
+    }
+    return os;
+}
+template<class v>
+auto operator>>(istream  &is, vector<vector<v>> &vec)->istream& {
+    for (auto &i : vec) 
+        for (auto &j : i) is >> j;            
+    return is;
+}
+struct dinitz {
+	const bool scaling = false; // com scaling -> O(nm log(MAXCAP)),
+	int lim;                    // com constante alta
+	struct edge {
+		int to, cap, rev, flow;
+		bool res;
+		edge(int to_, int cap_, int rev_, bool res_)
+			: to(to_), cap(cap_), rev(rev_), flow(0), res(res_) {}
+	};
+ 
+	vector<vector<edge>> g;
+	vector<int> lev, beg;
+	int F;
+	dinitz(int n) : g(n), F(0) {}
+ 
+	void add(int a, int b, int c) {
+		g[a].emplace_back(b, c, g[b].size(), false);
+		g[b].emplace_back(a, 0, g[a].size()-1, true);
+	}
+	bool bfs(int s, int t) {
+		lev = vector<int>(g.size(), -1); lev[s] = 0;
+		beg = vector<int>(g.size(), 0);
+		queue<int> q; q.push(s);
+		while (q.size()) {
+			int u = q.front(); q.pop();
+			for (auto& i : g[u]) {
+				if (lev[i.to] != -1 or (i.flow == i.cap)) continue;
+				if (scaling and i.cap - i.flow < lim) continue;
+				lev[i.to] = lev[u] + 1;
+				q.push(i.to);
+			}
+		}
+		return lev[t] != -1;
+	}
+	int dfs(int v, int s, int f = inf) {
+		if (!f or v == s) return f;
+		for (int& i = beg[v]; i < g[v].size(); i++) {
+			auto& e = g[v][i];
+			if (lev[e.to] != lev[v] + 1) continue;
+			int foi = dfs(e.to, s, min(f, e.cap - e.flow));
+			if (!foi) continue;
+			e.flow += foi, g[e.to][e.rev].flow -= foi;
+			return foi;
+		}
+		return 0;
+	}
+	int max_flow(int s, int t) {
+		for (lim = scaling ? (1<<30) : 1; lim; lim /= 2)
+			while (bfs(s, t)) while (int ff = dfs(s, t)) F += ff;
+		return F;
+	}
+};
+signed main(){
+    ios;
+    int n,m;
+    cin>>n>>m;
+    dinitz g(n);
+    while(m--){
+        int u,v,p;
+        cin>>u>>v>>p;
+        g.add(u-1,v-1,p);
+    }
+    cout<<g.max_flow(0, n-1)<<endl;
+}
